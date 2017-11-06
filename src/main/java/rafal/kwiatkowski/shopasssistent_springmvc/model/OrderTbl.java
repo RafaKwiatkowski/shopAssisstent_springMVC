@@ -54,10 +54,10 @@ public class OrderTbl {
     }
 
     public BigDecimal getTotalPrice() {
-//        totalPrice = BigDecimal.ZERO;
-//        for (Product product : products) {
-//            totalPrice = totalPrice.add(product.getUnitPrice().multiply(product.getQuantity()));
-//        }
+        totalPrice = BigDecimal.ZERO;
+        for (Product product : products) {
+            totalPrice = totalPrice.add(product.getUnitPrice().multiply(product.getQuantity()));
+        }
         return totalPrice;
     }
 
