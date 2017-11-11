@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import rafal.kwiatkowski.shopasssistent_springmvc.model.Product;
 import rafal.kwiatkowski.shopasssistent_springmvc.repository.ProductRepository;
 
-import javax.xml.ws.Response;
-import java.awt.*;
 import java.util.List;
 
 @RestController
@@ -19,22 +17,22 @@ public class ProductController {
     ProductRepository productRepository;
 
     @GetMapping(value = "product")
-    public List<Product> findAllProducts(){
-        List<Product> products =  productRepository.findAll();
-        return products;
+    public List<Product> findAllProducts() {
+        return productRepository.findAll();
     }
+
     @GetMapping(value = "/product/{id}", produces = MediaType.APPLICATION_XML_VALUE)
     public Product findProduct(@PathVariable Integer id) {
-        Product product = productRepository.findOne(id);
-        return product;
+        return productRepository.findOne(id);
     }
+
     @PostMapping(value = "product")
     public Product createProduct(@RequestBody Product product) {
-        productRepository.save(product);
-        return product;
+        return productRepository.save(product);
     }
+
     @PutMapping(value = "product/{id}")
-    public Product updateProduct(@PathVariable Integer id, @RequestBody Product productWithChanges){
+    public Product updateProduct(@PathVariable Integer id, @RequestBody Product productWithChanges) {
         Product product = productRepository.findOne(id);
         product.setName(productWithChanges.getName());
         product.setUnitPrice(productWithChanges.getUnitPrice());
@@ -42,11 +40,13 @@ public class ProductController {
         productRepository.save(product);
         return product;
     }
+
     @DeleteMapping(value = "product/{id}")
     public ResponseEntity<Product> deleteProduct(@PathVariable Integer id) {
         productRepository.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
     @DeleteMapping(value = "product")
     public ResponseEntity<Product> deleteAllProduct() {
         productRepository.deleteAll();
