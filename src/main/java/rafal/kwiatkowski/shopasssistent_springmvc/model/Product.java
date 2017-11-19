@@ -1,10 +1,15 @@
 package rafal.kwiatkowski.shopasssistent_springmvc.model;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.math.BigDecimal;
-import java.util.List;
+
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 public class Product {
     @Id
@@ -12,22 +17,21 @@ public class Product {
     private Integer id;
     private String name;
     private BigDecimal unitPrice;
-    private BigDecimal quantity;
-
-@ManyToMany(mappedBy = "products")
-    private List<OrderTbl> orderTbls;
 
     public Product() {
     }
 
-    public Product(String name, BigDecimal unitPrice, BigDecimal quantity) {
+    public Product(String name, BigDecimal unitPrice) {
         this.name = name;
         this.unitPrice = unitPrice;
-        this.quantity = quantity;
     }
 
     public Integer getId() {
         return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -46,15 +50,12 @@ public class Product {
         this.unitPrice = unitPrice;
     }
 
-    public BigDecimal getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(BigDecimal quantity) {
-        this.quantity = quantity;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", unitPrice=" + unitPrice +
+                '}';
     }
 }

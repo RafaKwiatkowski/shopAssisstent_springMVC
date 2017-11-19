@@ -1,63 +1,59 @@
 package rafal.kwiatkowski.shopasssistent_springmvc.model;
 
-import javax.persistence.*;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
+@XmlRootElement
 public class OrderTbl {
     @Id
     @GeneratedValue
     private Integer id;
-    @ManyToOne
-    @JoinColumn(name = "customerId")
-    private Customer customer;
-    @ManyToMany
-    @JoinTable(
-            name = "Order_Product",
-            joinColumns = {@JoinColumn(name = "orderId")},
-            inverseJoinColumns = {@JoinColumn(name = "productId")}
-    )
-    private List<Product> products;
+    private Integer customerId;
+
+    @ElementCollection(targetClass = Integer.class)
+    private List<Integer> products;
     private BigDecimal totalPrice;
-    private LocalDateTime orderDt;
 
     public OrderTbl() {
     }
 
-    public OrderTbl(Customer customer, List<Product> products, BigDecimal totalPrice, LocalDateTime orderDt) {
-        this.customer = customer;
+    public OrderTbl(Integer customerId, List<Integer> products, BigDecimal totalPrice) {
+        this.customerId = customerId;
         this.products = products;
         this.totalPrice = totalPrice;
-        this.orderDt = orderDt;
     }
 
     public Integer getId() {
         return id;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public Integer getCustomerId() {
+        return customerId;
     }
 
-    public List<Product> getProducts() {
+    public void setCustomerId(Integer customerId) {
+        this.customerId = customerId;
+    }
+
+    public List<Integer> getProducts() {
         return products;
     }
 
-    public void setProducts(List<Product> products) {
+    public void setProducts(List<Integer> products) {
         this.products = products;
     }
 
     public BigDecimal getTotalPrice() {
-        totalPrice = BigDecimal.ZERO;
-        for (Product product : products) {
-            totalPrice = totalPrice.add(product.getUnitPrice().multiply(product.getQuantity()));
-        }
         return totalPrice;
     }
 
@@ -65,11 +61,13 @@ public class OrderTbl {
         this.totalPrice = totalPrice;
     }
 
-    public LocalDateTime getOrderDt() {
-        return orderDt;
-    }
-
-    public void setOrderDt(LocalDateTime orderDt) {
-        this.orderDt = orderDt;
+    @Override
+    public String toString() {
+        return "OrderTbl{" +
+                "id=" + id +
+                ", customerId=" + customerId +
+                ", products=" + products +
+                ", totalPrice=" + totalPrice +
+                '}';
     }
 }

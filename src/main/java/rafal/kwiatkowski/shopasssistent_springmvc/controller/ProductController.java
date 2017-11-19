@@ -10,6 +10,8 @@ import rafal.kwiatkowski.shopasssistent_springmvc.repository.ProductRepository;
 
 import java.util.List;
 
+// 38 linni kodu
+
 @RestController
 public class ProductController {
 
@@ -17,8 +19,14 @@ public class ProductController {
     ProductRepository productRepository;
 
     @GetMapping(value = "product")
-    public List<Product> findAllProducts() {
-        return productRepository.findAll();
+    public ResponseEntity<List<Product>> findAllProducts() {
+        List<Product> products = productRepository.findAll();
+        return new ResponseEntity(products, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "product/{name}")
+    public List<Product> findByName(@PathVariable String name) {
+        return productRepository.findByName(name);
     }
 
     @GetMapping(value = "/product/{id}", produces = MediaType.APPLICATION_XML_VALUE)
@@ -26,19 +34,14 @@ public class ProductController {
         return productRepository.findOne(id);
     }
 
-    @PostMapping(value = "product")
+    @PostMapping(value = "product", consumes = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public Product createProduct(@RequestBody Product product) {
         return productRepository.save(product);
     }
 
-    @PutMapping(value = "product/{id}")
-    public Product updateProduct(@PathVariable Integer id, @RequestBody Product productWithChanges) {
-        Product product = productRepository.findOne(id);
-        product.setName(productWithChanges.getName());
-        product.setUnitPrice(productWithChanges.getUnitPrice());
-        product.setQuantity(productWithChanges.getQuantity());
-        productRepository.save(product);
-        return product;
+    @PutMapping(value = "product")
+    public Product updateProduct(@RequestBody Product productWithChanges) {
+        return productRepository.save(productWithChanges);
     }
 
     @DeleteMapping(value = "product/{id}")

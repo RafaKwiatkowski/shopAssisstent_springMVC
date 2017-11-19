@@ -1,9 +1,11 @@
 package rafal.kwiatkowski.shopasssistent_springmvc.model;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 @Entity
+@XmlRootElement
 public class Customer {
     @Id
     @GeneratedValue
@@ -14,8 +16,8 @@ public class Customer {
     private Address address;
     private String mail;
     private String phoneNumber;
-    @OneToMany(targetEntity = OrderTbl.class, mappedBy = "customer")
-    private List<OrderTbl> orders;
+    @ElementCollection(targetClass = Integer.class)
+    private List<Integer> orders;
 
     public Customer() {
     }
@@ -26,7 +28,6 @@ public class Customer {
         this.address = address;
         this.mail = mail;
         this.phoneNumber = phoneNumber;
-        this.orders = orders;
     }
 
     public Integer getId() {
@@ -73,11 +74,15 @@ public class Customer {
         this.phoneNumber = phoneNumber;
     }
 
-    public List<OrderTbl> getOrders() {
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public List<Integer> getOrders() {
         return orders;
     }
 
-    public void setOrders(List<OrderTbl> orders) {
+    public void setOrders(List<Integer> orders) {
         this.orders = orders;
     }
 }
