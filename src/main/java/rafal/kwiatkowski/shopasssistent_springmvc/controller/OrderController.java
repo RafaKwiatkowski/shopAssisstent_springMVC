@@ -37,13 +37,13 @@ public class OrderController {
     }
 
     @DeleteMapping(value = "order/{id}")
-    public ResponseEntity<Product> deleteProduct(@PathVariable Integer id) {
+    public ResponseEntity<OrderTbl> deleteProduct(@PathVariable Integer id) {
         orderService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping(value = "order")
-    public ResponseEntity<Product> deleteAllProduct() {
+    public ResponseEntity<OrderTbl> deleteAllProduct() {
         orderService.deleteAll();
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

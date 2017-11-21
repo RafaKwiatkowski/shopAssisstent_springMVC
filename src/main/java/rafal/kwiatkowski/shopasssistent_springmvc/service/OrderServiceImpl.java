@@ -2,7 +2,6 @@ package rafal.kwiatkowski.shopasssistent_springmvc.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import rafal.kwiatkowski.shopasssistent_springmvc.model.OrderTbl;
 import rafal.kwiatkowski.shopasssistent_springmvc.model.Product;
 import rafal.kwiatkowski.shopasssistent_springmvc.repository.OrderRepository;
